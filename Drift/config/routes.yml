@@ -1,0 +1,4 @@
+# Routes
+get_user:
+  path: /users/{id}
+  controller: App\Controller\GetUserController

@@ -1,0 +1,36 @@
+parameters:
+    kernel.secret: yoursecretshouldbehere
+    app_path: "../.."
+
+framework:
+    form: false
+    assets: false
+    session: false
+    translator: false
+    php_errors:
+        log: false
+
+command_bus:
+    query_bus:
+        middlewares:
+            - App\Domain\Middleware\UpperCaseMiddleware
+
+# config/services.yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    #
+    # Controllers
+    #
+    App\Controller\:
+        resource : "%app_path%/src/Controller/*"
+        tags:
+            - {name: controller.service_arguments}
+
+    App\Domain\QueryHandler\:
+        resource: "%app_path%/src/Domain/QueryHandler/*"
+        tags:
+            - {name: query_handler}
