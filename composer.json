@@ -21,14 +21,17 @@
         "drift/server": "0.1.*, >=0.1.7",
         "drift/react-functions": "0.1.*",
         "drift/event-loop-utils": "0.1.*",
-        "drift/command-bus-bundle": "0.1.*"
+        "drift/command-bus-bundle": "0.1.*",
+        "drift/phpunit-bridge": "0.1.*"
     },
     "autoload": {
         "psr-4": {
             "App\\": "src/",
             "Domain\\": "src/Domain",
             "Infrastructure\\": "src",
-            "Drift\\": "Drift/"
+            "Drift\\": "Drift/",
+            "Test\\": "tests/"
+
         }
     }
 }
