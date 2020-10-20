@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Domain\Model;
+namespace Test\Domain\Model;
 
 use App\Domain\Exception\NotFoundException;
 use App\Domain\Model\User;
@@ -23,6 +23,7 @@ abstract class UserRepositoryTest extends TestCase
      */
     abstract public function createEmptyUserRepository(LoopInterface $loop) : UserRepository;
 
+
     public function testGetUserOnEmptyRepository()
     {
         $loop = Factory::create();
@@ -43,6 +44,23 @@ abstract class UserRepositoryTest extends TestCase
         $promise = $repository->getUser('123');
         $user = await($promise, $loop);
         $this->assertEquals('123', $user->getId());
+        $this->assertEquals('Engonga', $user->getName());
+    }
+
+    public function testUpdates()
+    {
+        $loop = Factory::create();
+        $repository = $this->createEmptyUserRepository($loop);
+        $promise = $repository->putUser(new User('123', 'Engonga', 'engonga@olakease.com'));
+        await($promise, $loop);
+
+        $promise = $repository->putUser(new User('123', 'Holi', 'engonga@olakease.com'));
+        await($promise, $loop);
+
+        $promise = $repository->getUser('123');
+        $user = await($promise, $loop);
+        $this->assertEquals('123', $user->getId());
+        $this->assertEquals('Holi', $user->getName());
     }
 
     public function testDeleteUserWhenUserNotExists()

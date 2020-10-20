@@ -22,13 +22,15 @@
         "drift/react-functions": "0.1.*",
         "drift/event-loop-utils": "0.1.*",
         "drift/command-bus-bundle": "0.1.*",
-        "drift/phpunit-bridge": "0.1.*"
+        "drift/phpunit-bridge": "0.1.*",
+        "drift/dbal-bundle": "0.1.*",
+        "clue/reactphp-sqlite": "*"
     },
     "autoload": {
         "psr-4": {
             "App\\": "src/",
             "Domain\\": "src/Domain",
-            "Infrastructure\\": "src",
+            "Infrastructure\\": "src/Infrastructure/",
             "Drift\\": "Drift/",
             "Test\\": "tests/"
 
