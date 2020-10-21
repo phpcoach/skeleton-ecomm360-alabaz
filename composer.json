@@ -24,7 +24,8 @@
         "drift/command-bus-bundle": "0.1.*",
         "drift/phpunit-bridge": "0.1.*",
         "drift/dbal-bundle": "0.1.*",
-        "clue/reactphp-sqlite": "*"
+        "clue/reactphp-sqlite": "*",
+        "react/mysql": "*"
     },
     "autoload": {
         "psr-4": {

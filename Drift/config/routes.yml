@@ -1,4 +1,10 @@
 # Routes
 get_user:
   path: /users/{id}
+  methods: GET
   controller: App\Controller\GetUserController
+
+put_user:
+  path: /users/{id}
+  methods: PUT
+  controller: App\Controller\PutUserController

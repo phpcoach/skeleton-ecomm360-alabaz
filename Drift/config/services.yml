@@ -15,6 +15,16 @@ command_bus:
         middlewares:
             - App\Domain\Middleware\UpperCaseMiddleware
 
+dbal:
+    connections:
+        users:
+            driver: mysql
+            host: localhost
+            port: 3306
+            user: root
+            password: root
+            database: users
+
 # config/services.yaml
 services:
     _defaults:
@@ -34,3 +44,13 @@ services:
         resource: "%app_path%/src/Domain/QueryHandler/*"
         tags:
             - {name: query_handler}
+
+    App\Domain\CommandHandler\:
+        resource: "%app_path%/src/Domain/CommandHandler/*"
+        tags:
+            - { name: command_handler }
+
+    App\Domain\Model\InMemoryUserRepository:
+    Infrastructure\DBAL\Model\DBALUserRepository:
+    App\Domain\Model\UserRepository:
+        alias: Infrastructure\DBAL\Model\DBALUserRepository

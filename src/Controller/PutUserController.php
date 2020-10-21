@@ -15,26 +15,25 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\Exception\NotFoundException;
+use App\Domain\Command\PutUser;
 use App\Domain\Model\User;
-use App\Domain\Query\GetUser;
-use Drift\CommandBus\Bus\QueryBus;
+use Drift\CommandBus\Bus\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GetUserController.
  *
- * /users/123 GET
+ * /users/123 PUT
  */
-class GetUserController
+class PutUserController
 {
     private $bus;
 
     /**
-     * @param QueryBus $bus
+     * @param CommandBus $bus
      */
-    public function __construct(QueryBus $bus)
+    public function __construct(CommandBus $bus)
     {
         $this->bus =  $bus;
     }
@@ -45,22 +44,15 @@ class GetUserController
     public function __invoke(Request $request)
     {
         $id = $request->get('id');
-        $getUser = new GetUser($id);
+        $body = json_decode($request->getContent(), true);
+        $user = new User($id, $body['name'], $body['email']);
+        $putUser = new PutUser($user);
 
         return $this
             ->bus
-            ->ask($getUser)
-            ->then(function(User $user) {
-                return new JsonResponse([
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail()
-                ]);
-            })
-            ->otherwise(function(NotFoundException $exception) {
-                return new JsonResponse([
-                    'message' => $exception->getMessage()
-                ], 404);
+            ->execute($putUser)
+            ->then(function() {
+                return new JsonResponse('User put');
             });
     }
 }
