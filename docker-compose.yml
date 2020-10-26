@@ -5,27 +5,12 @@ networks:
 
 services:
 
-  mysql:
-    image: "mysql:8"
-    container_name: mysql
-    networks:
-      - main
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: users
-    volumes:
-      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
-    ports:
-      - "3306:3306"
-
-
-  server:
-    build: .
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
     networks:
       - main
     ports:
-      - "8000:8000"
-    volumes:
-      - .:/var/www/
+      - "5672:5672"
+      - "15672:15672"
+

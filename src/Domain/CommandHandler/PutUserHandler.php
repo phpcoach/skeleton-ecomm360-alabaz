@@ -4,7 +4,9 @@
 namespace App\Domain\CommandHandler;
 
 use App\Domain\Command\PutUser;
+use App\Domain\Event\UserWasPut;
 use App\Domain\Model\UserRepository;
+use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
 
 /**
@@ -18,11 +20,18 @@ class PutUserHandler
     private $userRepository;
 
     /**
-     * @param UserRepository $userRepository
+     * @var EventBus
      */
-    public function __construct(UserRepository $userRepository)
+    private $eventBus;
+
+    /**
+     * @param UserRepository $userRepository
+     * @param EventBus       $eventBus
+     */
+    public function __construct(UserRepository $userRepository, EventBus $eventBus)
     {
         $this->userRepository = $userRepository;
+        $this->eventBus = $eventBus;
     }
 
     /**
@@ -34,6 +43,11 @@ class PutUserHandler
     {
         return $this
             ->userRepository
-            ->putUser($putUser->getUser());
+            ->putUser($putUser->getUser())
+            ->then(function() use ($putUser) {
+                return $this
+                    ->eventBus
+                    ->dispatch(new UserWasPut($putUser->getUser()));
+            });
     }
 }

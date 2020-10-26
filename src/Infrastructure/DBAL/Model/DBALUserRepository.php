@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Infrastructure\DBAL\Model;
+namespace Infrastructure\DBAL\Model;
 
 
 use App\Domain\Exception\NotFoundException;

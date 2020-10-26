@@ -5,7 +5,7 @@ namespace Test\Infrastructure\DBAL\Model;
 
 
 use App\Domain\Model\UserRepository;
-use App\Infrastructure\DBAL\Model\DBALUserRepository;
+use Infrastructure\DBAL\Model\DBALUserRepository;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Drift\DBAL\Connection;
 use Drift\DBAL\Credentials;
