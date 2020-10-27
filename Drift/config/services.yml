@@ -26,6 +26,18 @@ event_bus:
         amqp:
             host: localhost
 
+#
+# Preload Bundle configuration
+#
+preload:
+    services:
+        "amqp.event_bus_channel": ~
+        "amqp.command_bus_channel": ~
+    presets:
+        - "@symfony"
+        - "@drift"
+        - "@react"
+
 # config/services.yaml
 services:
     _defaults:
