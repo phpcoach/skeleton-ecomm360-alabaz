@@ -20,7 +20,6 @@ use App\Domain\Model\User;
 use App\Domain\Query\GetUser;
 use Drift\CommandBus\Bus\QueryBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GetUserController.
@@ -40,11 +39,10 @@ class GetUserController
     }
 
     /**
-     * @param Request $request
+     * @param string $id
      */
-    public function __invoke(Request $request)
+    public function __invoke(string $id)
     {
-        $id = $request->get('id');
         $getUser = new GetUser($id);
 
         return $this

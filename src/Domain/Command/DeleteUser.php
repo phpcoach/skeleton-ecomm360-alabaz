@@ -1,13 +1,16 @@
 <?php
 
 
-namespace App\Domain\Event;
+namespace App\Domain\Command;
 
 /**
- * Class UserWasPut
+ * Class DeleteUser
  */
-class UserWasPut
+class DeleteUser
 {
+    /**
+     * @var string
+     */
     private $id;
 
     /**
@@ -21,7 +24,7 @@ class UserWasPut
     /**
      * @return string
      */
-    public function getUserId(): string
+    public function getId(): string
     {
         return $this->id;
     }

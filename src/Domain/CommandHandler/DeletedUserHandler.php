@@ -3,16 +3,17 @@
 
 namespace App\Domain\CommandHandler;
 
-use App\Domain\Command\PutUser;
+use App\Domain\Command\DeleteUser;
+use App\Domain\Event\UserWasDeleted;
 use App\Domain\Event\UserWasPut;
 use App\Domain\Model\UserRepository;
 use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
 
 /**
- * Class PutUserHandler
+ * Class DeletedUserHandler
  */
-class PutUserHandler
+class DeletedUserHandler
 {
     /**
      * @var UserRepository
@@ -35,19 +36,19 @@ class PutUserHandler
     }
 
     /**
-     * @param PutUser $putUser
+     * @param DeleteUser $deleteUser
      *
      * @return PromiseInterface<void>
      */
-    public function handle(PutUser $putUser) : PromiseInterface
+    public function handle(DeleteUser $deleteUser) : PromiseInterface
     {
         return $this
             ->userRepository
-            ->putUser($putUser->getUser())
-            ->then(function() use ($putUser) {
+            ->deleteUser($deleteUser->getId())
+            ->then(function() use ($deleteUser) {
                 return $this
                     ->eventBus
-                    ->dispatch(new UserWasPut($putUser->getUser()->getId()));
+                    ->dispatch(new UserWasDeleted($deleteUser->getId()));
             });
     }
 }

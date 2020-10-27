@@ -17,14 +17,24 @@ command_bus:
 
 event_bus:
     exchanges:
-        events: events
+        local_events: events
     router:
-        _all: events
+        _all: local_events
     async_pass_through: false
     async_adapter:
         adapter: amqp
         amqp:
             host: localhost
+
+dbal:
+    connections:
+        users:
+            driver: mysql
+            host: 127.0.0.1
+            port: 3306
+            user: root
+            password: root
+            dbname: users
 
 #
 # Preload Bundle configuration
@@ -64,8 +74,7 @@ services:
             - { name: command_handler }
 
     App\Domain\Model\InMemoryUserRepository:
+    Infrastructure\DBAL\Model\DBALUserRepository:
+    Infrastructure\DBAL\Model\ComposedUserRepository:
     App\Domain\Model\UserRepository:
-        alias: App\Domain\Model\InMemoryUserRepository
-
-    App\Domain\Listener\:
-        resource: "%app_path%/src/Domain/Listener/*"
+        alias: Infrastructure\DBAL\Model\ComposedUserRepository

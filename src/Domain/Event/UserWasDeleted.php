@@ -4,9 +4,9 @@
 namespace App\Domain\Event;
 
 /**
- * Class UserWasPut
+ * Class UserWasDeleted
  */
-class UserWasPut
+class UserWasDeleted
 {
     private $id;
 

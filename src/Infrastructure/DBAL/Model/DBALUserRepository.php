@@ -36,6 +36,7 @@ class DBALUserRepository implements UserRepository
      */
     public function getUser(string $id) : PromiseInterface
     {
+        var_dump('User requested from DBAL');
         return $this
             ->connection
             ->findOneBy('users',['id' => $id])
