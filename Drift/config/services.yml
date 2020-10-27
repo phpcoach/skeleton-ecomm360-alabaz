@@ -24,13 +24,13 @@ event_bus:
     async_adapter:
         adapter: amqp
         amqp:
-            host: localhost
+            host: rabbitmq
 
 dbal:
     connections:
         users:
             driver: mysql
-            host: 127.0.0.1
+            host: mysql
             port: 3306
             user: root
             password: root

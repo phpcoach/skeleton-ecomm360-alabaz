@@ -5,7 +5,6 @@ namespace App\Domain\CommandHandler;
 
 use App\Domain\Command\DeleteUser;
 use App\Domain\Event\UserWasDeleted;
-use App\Domain\Event\UserWasPut;
 use App\Domain\Model\UserRepository;
 use Drift\EventBus\Bus\EventBus;
 use React\Promise\PromiseInterface;
